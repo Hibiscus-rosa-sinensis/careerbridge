@@ -1,0 +1,209 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --color-brand-50: #fff8f2;
+  --color-brand-100: #ffeede;
+  --color-brand-200: #fdd9b6;
+  --color-brand-300: #fab97e;
+  --color-brand-400: #f59338;
+  --color-brand-500: #ea6a15;
+  --color-brand-600: #cf5510;
+  --color-brand-700: #a5420f;
+  --color-brand-800: #7d330f;
+
+  --color-ink-900: #0f1b26;
+  --color-ink-800: #16232f;
+  --color-ink-700: #223341;
+  --color-ink-600: #34485a;
+  --color-ink-500: #4e6376;
+  --color-ink-400: #6b7c8c;
+  --color-ink-300: #93a2af;
+  --color-ink-200: #c3ccd4;
+
+  --color-line-100: #f2f1ee;
+  --color-line-200: #ebe9e5;
+  --color-line-300: #dedbd5;
+  --color-line-400: #c9cfd5;
+
+  --color-canvas: #faf7f2;
+  --color-canvas-deep: #f4eee5;
+
+  --color-teal-600: #1f6f63;
+  --color-amber-600: #b06c07;
+  --color-green-700: #197a4b;
+  --color-red-700: #b3352c;
+  --color-blue-700: #1f5fa8;
+  --color-slate-600: #55606b;
+
+  --shadow-soft: 0 1px 2px rgb(15 27 38 / 0.04), 0 8px 24px -12px rgb(15 27 38 / 0.14);
+  --shadow-lift: 0 2px 4px rgb(15 27 38 / 0.05), 0 18px 40px -20px rgb(15 27 38 / 0.22);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: #ffffff;
+    color: var(--color-ink-900);
+    font-family: var(--font-sans);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.015em;
+    color: var(--color-ink-900);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: var(--color-brand-100);
+  }
+
+  input,
+  select,
+  textarea,
+  button {
+    font: inherit;
+  }
+}
+
+@layer components {
+  .cb-input {
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid var(--color-line-300);
+    background: #fff;
+    padding: 0.625rem 0.85rem;
+    font-size: 0.9rem;
+    color: var(--color-ink-900);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .cb-input::placeholder {
+    color: var(--color-ink-300);
+  }
+  .cb-input:hover {
+    border-color: var(--color-line-400);
+  }
+  .cb-input:focus {
+    outline: none;
+    border-color: var(--color-brand-400);
+    box-shadow: 0 0 0 3px var(--color-brand-100);
+  }
+  .cb-input[aria-invalid="true"] {
+    border-color: var(--color-red-700);
+    box-shadow: 0 0 0 3px rgb(179 53 44 / 0.1);
+  }
+
+  .cb-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-ink-700);
+    margin-bottom: 0.35rem;
+  }
+
+  .cb-panel {
+    border-radius: 16px;
+    border: 1px solid var(--color-line-200);
+    background: #fff;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 100;
+    background: var(--color-ink-900);
+    color: #fff;
+    padding: 0.6rem 1rem;
+    border-radius: 0 0 10px 0;
+    font-size: 0.85rem;
+  }
+  .skip-link:focus {
+    left: 0;
+  }
+
+  .grid-paper {
+    background-image: linear-gradient(var(--color-line-200) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-line-200) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .dot-field {
+    background-image: radial-gradient(var(--color-line-300) 1px, transparent 1px);
+    background-size: 18px 18px;
+  }
+}
+
+/* ------------------------- CV printing / PDF export ------------------------- */
+
+@page {
+  size: A4;
+  margin: 14mm;
+}
+
+.cv-sheet {
+  width: 100%;
+  max-width: 794px;
+  background: #fff;
+  color: #16232f;
+  line-height: 1.5;
+}
+
+@media print {
+  body {
+    background: #fff !important;
+  }
+  body * {
+    visibility: hidden !important;
+  }
+  #cv-print,
+  #cv-print * {
+    visibility: visible !important;
+  }
+  #cv-print {
+    position: absolute !important;
+    inset: 0;
+    width: 100%;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+  }
+  .cv-sheet {
+    box-shadow: none !important;
+    border: 0 !important;
+    max-width: none !important;
+    border-radius: 0 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .cv-section {
+    break-inside: avoid;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
